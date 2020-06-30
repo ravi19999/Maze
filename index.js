@@ -61,6 +61,8 @@ const shuffle = (arr) => {
     arr[counter] = arr[index];
     arr[index] = temp;
   }
+
+  return arr;
 };
 
 const grid = Array(cells)
@@ -87,22 +89,33 @@ const stepThroughCell = (row, column) => {
   grid[row][column] = true;
   //Assemble randomly-ordered list of neighbours.
   const neighbors = shuffle([
-    [row - 1, column],
-    [row, column + 1],
-    [row + 1, column],
-    [row, column - 1],
+    [row - 1, column, 'up'], //above
+    [row, column + 1, 'right'], //right
+    [row + 1, column, 'down'], //below
+    [row, column - 1, 'left'], //left
   ]);
   console.log(neighbors);
   //For each neighbour...
-
-  //See if that neighbour is out of bounds.
+  for (let neighbor of neighbors) {
+    //See if that neighbour is out of bounds.
+    const [nextRow, nextColumn, direction] = neighbor;
+    if (
+      nextRow < 0 ||
+      nextRow >= cells ||
+      nextColumn < 0 ||
+      nextColumn >= cells
+    )
+      continue;
+  }
 
   //If we have visited that neighbour, continue to next neighbour.
+  if (grid[nextRow][nextColumn]) {
+    continue;
+  }
 
   //Remove a wall from either the verticals array or horizontals array.
 
   //Visit that next cell.
 };
 
-stepThroughCell(startRow, startColumn);
-console.log(grid);
+stepThroughCell(1, 1);
