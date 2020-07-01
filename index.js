@@ -89,9 +89,9 @@ const stepThroughCell = (row, column) => {
   grid[row][column] = true;
   //Assemble randomly-ordered list of neighbours.
   const neighbors = shuffle([
-    // [row - 1, column, 'up'], //above
-    // [row, column + 1, 'right'], //right
-    // [row + 1, column, 'down'], //below
+    [row - 1, column, 'up'], //above
+    [row, column + 1, 'right'], //right
+    [row + 1, column, 'down'], //below
     [row, column - 1, 'left'], //left
   ]);
   console.log(neighbors);
@@ -119,6 +119,10 @@ const stepThroughCell = (row, column) => {
       verticals[row][column - 1] = true;
     } else if (direction === 'right') {
       verticals[row][column] = true;
+    } else if (direction === 'up') {
+      horizontals[row - 1][column] = true;
+    } else if (direction === 'down') {
+      horizontals[row + 1][column] = true;
     }
   }
   //Visit that next cell.
