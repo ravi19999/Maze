@@ -11,6 +11,7 @@ const {
 const cells = 3;
 const width = 800;
 const height = 600;
+const unitLength = width / cells;
 
 const engine = Engine.create();
 const { world } = engine;
@@ -18,7 +19,6 @@ const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: false,
     width,
     height,
   },
@@ -94,7 +94,6 @@ const stepThroughCell = (row, column) => {
     [row + 1, column, 'down'], //below
     [row, column - 1, 'left'], //left
   ]);
-  console.log(neighbors);
   //For each neighbour...
   for (let neighbor of neighbors) {
     //See if that neighbour is out of bounds.
@@ -122,7 +121,7 @@ const stepThroughCell = (row, column) => {
     } else if (direction === 'up') {
       horizontals[row - 1][column] = true;
     } else if (direction === 'down') {
-      horizontals[row + 1][column] = true;
+      horizontals[row][column] = true;
     }
 
     stepThroughCell(nextRow, nextColumn);
@@ -131,3 +130,22 @@ const stepThroughCell = (row, column) => {
 };
 
 stepThroughCell(startRow, startColumn);
+
+horizontals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    if (open) {
+      return;
+    }
+
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength / 2,
+      rowIndex * unitLength + unitLength,
+      unitLength,
+      10,
+      {
+        isStatic: true
+      }
+    );
+    World.add(world, wall);
+  });
+});
