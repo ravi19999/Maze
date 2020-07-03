@@ -11,8 +11,8 @@ const {
 } = Matter;
 
 const cells = 3;
-const width = 600;
-const height = 600;
+const width = window.innerWidth;
+const height = window.innerHeight;
 const unitLength = width / cells;
 
 const engine = Engine.create();
