@@ -11,7 +11,7 @@ const {
 } = Matter;
 
 cellsHorizontal = 14;
-cellsVertical = 11;
+cellsVertical = 14;
 const width = window.innerWidth;
 const height = window.innerHeight;
 const unitLengthX = width / cellsHorizontal;
